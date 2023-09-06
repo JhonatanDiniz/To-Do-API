@@ -31,4 +31,9 @@ public class TodoService {
 	public List<Todo> findAllClose() {
 		return repository.findByFinalizado(true);
 	}
+
+	public Todo create(Todo obj) {
+		obj.setId(null);
+		return repository.save(obj);
+	}
 }
