@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jhonatan.todo.domain.Todo;
 import com.jhonatan.todo.repository.TodoRepository;
+import com.jhonatan.todo.service.exception.ObjectNotFound;
 
 @Service
 public class TodoService {
@@ -21,7 +22,7 @@ public class TodoService {
 	
 	public Todo findById(Long id){
 		Optional<Todo> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(()-> new ObjectNotFound("Objeto não encontrado id: " + id));
 	}
 
 	public List<Todo> findAllOpen() {
@@ -38,6 +39,7 @@ public class TodoService {
 	}
 
 	public void delete(long id) {
+		findById(id);
 		repository.deleteById(id);
 		
 	}
